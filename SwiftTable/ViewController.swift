@@ -8,11 +8,23 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-                            
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    let cellIdentifier = "cellIdentifier"
+    var tableData = String[]()
+    
+    @IBOutlet var tableView: UITableView
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        // Register the UITableViewCell class with the tableView
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
+        
+        // Setup table data
+        for index in 0...100 {
+            tableData += "Item \(index)"
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +32,38 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // UITableViewDataSource methods
+    
+    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+        return tableData.count
+    }
+    
+    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        
+        var cell = tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier) as UITableViewCell
+        
+        cell.textLabel.text = self.tableData[indexPath.row]
+        
+        return cell
+        
+    }
 
+    // UITableViewDelegate methods
+    
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+
+        let alert = UIAlertController(title: "Item selected", message: "You selected item \(indexPath.row)", preferredStyle: UIAlertControllerStyle.Alert)
+    
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+
+    
 }
 

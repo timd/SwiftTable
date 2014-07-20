@@ -23,7 +23,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // Setup table data
         for index in 0...100 {
-            tableData += "Item \(index)"
+            self.tableData += "Item \(index)"
         }
     }
 
@@ -58,7 +58,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         let alert = UIAlertController(title: "Item selected", message: "You selected item \(indexPath.row)", preferredStyle: UIAlertControllerStyle.Alert)
     
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK",
+                                      style: UIAlertActionStyle.Default,
+                                    handler: {
+                                        (alert: UIAlertAction!) in println("An alert of type \(alert.style.hashValue) was tapped!")
+                                    }))
         
         self.presentViewController(alert, animated: true, completion: nil)
         

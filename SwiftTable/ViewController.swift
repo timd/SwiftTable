@@ -11,19 +11,21 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let cellIdentifier = "cellIdentifier"
-    var tableData = String[]()
+    var tableData = [String]()
     
-    @IBOutlet var tableView: UITableView
+    @IBOutlet var tableView: UITableView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Register the UITableViewCell class with the tableView
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
+        
+        
+        self.tableView?.registerClass(UITableViewCell.self, forCellReuseIdentifier: self.cellIdentifier)
         
         // Setup table data
         for index in 0...100 {
-            self.tableData += "Item \(index)"
+            self.tableData.append("Item \(index)")
         }
     }
 
@@ -34,24 +36,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     // UITableViewDataSource methods
     
-    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier(self.cellIdentifier) as UITableViewCell
         
-        cell.textLabel.text = self.tableData[indexPath.row]
+        cell.textLabel?.text = self.tableData[indexPath.row]
         
         return cell
-        
     }
-
+    
     // UITableViewDelegate methods
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
@@ -68,6 +68,5 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
 
-    
 }
 

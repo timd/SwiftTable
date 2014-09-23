@@ -62,6 +62,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                                       style: UIAlertActionStyle.Default,
                                     handler: {
                                         (alert: UIAlertAction!) in println("An alert of type \(alert.style.hashValue) was tapped!")
+                                        self.tableView?.deselectRowAtIndexPath(indexPath, animated: true)
                                     }))
         
         self.presentViewController(alert, animated: true, completion: nil)
